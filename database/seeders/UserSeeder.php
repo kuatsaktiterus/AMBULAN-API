@@ -16,15 +16,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         $users = [
-            ['nama'     =>'ricky',
-            'no_hp'     => '12345678',
-            'role'      => 'customer',
-            'password'  => Hash::make(12345678)],
+            ['name'         =>'ricky',
+            'phone_number'  => '12345678',
+            'role'          => 'customer',
+            'password'      => Hash::make(12345678)],
 
-            ['nama'     => 'ancung',
-            'no_hp'     => '123456789',
-            'role'      => 'driver',
-            'password'  => Hash::make(12345678)],
+            ['name'         => 'ancung',
+            'phone_number'  => '123456789',
+            'role'          => 'driver',
+            'password'      => Hash::make(12345678)],
         ];
 
         foreach ($users as $user) {

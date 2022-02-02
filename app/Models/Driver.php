@@ -15,13 +15,13 @@ class Driver extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama_kendaraan',
-        'no_polisi_kendaraan',
-        'id_user',
+        'vehicle_name',
+        'registration_number',
+        'user_id',
     ];
 
     public function User()
     {
-        return $this->belongsTo('App\Models\User', 'id_user');
+        return $this->belongsTo('App\Models\User', 'user_id');
     }
 }

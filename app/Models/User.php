@@ -18,8 +18,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nama',
-        'no_hp',
+        'name',
+        'phone_number',
         'role',
         'password',
     ];
@@ -41,7 +41,7 @@ class User extends Authenticatable
 
     public function Driver()
     {
-        return $this->hasOne('App\Models\Driver', 'id_user');
+        return $this->hasOne('App\Models\Driver', 'user_id');
     }
 
     // this is a recommended way to declare event handlers
