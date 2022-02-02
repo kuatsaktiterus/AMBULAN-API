@@ -126,12 +126,12 @@ Header: api_key = (api key from file .env) # without brackets
 
 Json-required:
 {
-  "nama": "name for user",
-  "no_hp": "phone number",
+  "name": "name of user",
+  "phone_number": "phone number",
   "password": "user password",
-  "user_role": "role of user", 
-  "nama_kendaraan": "name of vehicle",
-  "no_polisi_kendaraan": "registration number"
+  "user_role": "role of user",
+  "vehicle_name": "name of vehicle",
+  "registration_number": "registration number"
 }
 NB: There are just 2 value available for "user_role" (customer and driver) 
 
@@ -145,6 +145,7 @@ Expected Response when success:
     "status_code": 201,
     "access_token": "access token that you have save for auth",
     "token_type": "Bearer",
+    "user_id": id of the user,
     "user_name": "user name",
     "user_role": "user role"
   }
@@ -162,8 +163,8 @@ Header: api_key = (api key from file .env) # without brackets
 
 Json-required:
 {
-  "no_hp": "this parameter is phone number from registered user", 
-  "password": "this parameter is for password" 
+  "phone_number": "user phone number", 
+  "password": "user password" 
 }
 
 Expected response when success:
@@ -175,6 +176,7 @@ Expected response when success:
     "status_code": 200,
     "access_token": "access token that you have save for auth",
     "token_type": "Bearer",
+    "user_id": id of the user,
     "user_name": "user name",
     "user_role": "user role"
   }
