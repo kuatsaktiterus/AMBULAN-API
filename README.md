@@ -48,17 +48,26 @@ $ composer install
 
 2. Setup env file
 
-```
 - copy env file from .env.example
-for windows
+<br>
+<br>
+
+For windows:
+
+```
 $ copy .env.example .env
-or linux
+```
+Or for linux:
+
+```
 $ cp .env.example .env
+```
+<br>
 
 - generate env key
+```
 $ php artisan key:generate
 ```
-
 <br/>
 <br/>
 
@@ -78,11 +87,11 @@ $ php artisan key:generate
 5. Run Migration
 ```
 $ php artisan migrate
+```
+If you want to seed the database when you migrate type command below
 
-if you want to seed the database when you migrate type command below
-
+```
 $ php artisan migrate --seed
-
 ```
 
 <br/>
@@ -99,13 +108,13 @@ To run this app make sure that you have setup the api key in .env and use it lat
 <br>
 
 * Run App
-```
+  
 To run laravel app type in console
-
+```
 $ php artisan serve
+```
 
 if you dont change the url in .env the default link will be in http://localhost:8000/
-```
 
 <br>
 <br>
@@ -118,13 +127,32 @@ Note that there are 3 end-point (login, register, and logout).
 <br>
 <br>
 Register API
+<br>
+<br>
+End-point:
 
 ```
-End-point: http://localhost:8000/register or any url that you have example: http://(your uri)/register
-Method: post
-Header: api_key = (api key from file .env) # without brackets
+http://localhost:8000/register
+```
+
+or any url that you have example: 
+```
+http://(YOUR URI)/register
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+```
+api_key: (api key from file .env) # without brackets
+```
 
 Json-required:
+```
 {
   "name": "name of user",
   "phone_number": "phone number",
@@ -133,10 +161,14 @@ Json-required:
   "vehicle_name": "name of vehicle",
   "registration_number": "registration number"
 }
+```
 NB: There are just 2 value available for "user_role" (customer and driver) 
-
-
+<br>
+<br>
+<br>
+<br>
 Expected Response when success:
+```
 {
   "status": "success",
   "message": "Register Successfully",
@@ -155,19 +187,40 @@ Expected Response when success:
 <br>
 <br>
 Login API
+<br>
+<br>
+End-point:
 
 ```
-End-point: http://localhost:8000/login or any url that you have example: http://(your uri)/login
-Method: get
-Header: api_key = (api key from file .env) # without brackets
+http://localhost:8000/login
+```
+or any url that you have example: 
+```
+http://(your uri)/login
+```
+<br>
+Method: GET
+<br>
+<br>
+<br>
+
+Header: 
+```
+api_key = (api key from file .env) # without brackets
+```
 
 Json-required:
+```
 {
   "phone_number": "user phone number", 
   "password": "user password" 
 }
+```
+<br>
+<br>
 
 Expected response when success:
+```
 {
   "status": "success",
   "message": "Login Successfully",
@@ -187,18 +240,34 @@ Expected response when success:
 <br>
 <br>
 Logout API
+<br>
+<br>
 
+End-point: 
 ```
-End-point: http://localhost:8000/logout or any url that you have example: http://(your uri)/logout
-Method: post
-Header: 
-      - api_key = (api key from file .env) # without brackets
-      - Authorization = (token_type) (access token) # without brackets
+http://localhost:8000/logout
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/logout
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    api_key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
 
 Json-required: No JSON required
-
-
+<br>
+<br>
 Expected Response when success:
+```
 {
   "status": "success",
   "message": "Logout Successfully",
