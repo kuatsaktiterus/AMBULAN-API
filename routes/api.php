@@ -14,9 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware(['auth:sanctum'])->group(function () {
-    Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
-});
-
 Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
 Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
+
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
+    
+    Route::post('store-order', [App\Http\Controllers\Order\OrderController::class, 'storeOrder']);
+});

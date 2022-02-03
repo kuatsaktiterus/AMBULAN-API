@@ -17,7 +17,7 @@ class CreateDriversTable extends Migration
             $table->id();
             $table->string('vehicle_name');
             $table->string('registration_number');
-            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned()->unique();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
