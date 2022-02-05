@@ -19,6 +19,9 @@ Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'regis
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('logout', [App\Http\Controllers\Auth\AuthController::class, 'logout']);
-    
+
+    // order
     Route::post('store-order', [App\Http\Controllers\Order\OrderController::class, 'storeOrder']);
+    Route::post('check-order', [App\Http\Controllers\Order\OrderController::class, 'checkOrder']);
+    Route::post('check-on-process-order', [App\Http\Controllers\Order\OrderController::class, 'isOnProcessOrder']);
 });

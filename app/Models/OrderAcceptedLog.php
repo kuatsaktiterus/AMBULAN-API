@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Driver extends Model
+class OrderAcceptedLog extends Model
 {
     use HasFactory;
 
@@ -15,18 +15,17 @@ class Driver extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'vehicle_name',
-        'registration_number',
-        'user_id',
+        'order_id',
+        'driver_id',
     ];
 
-    public function User()
+    public function Order()
     {
-        return $this->belongsTo('App\Models\User', 'user_id');
+        return $this->belongsTo('App\Models\Order', 'order_id');
     }
 
-    public function OrderAcceptedLogs()
+    public function Driver()
     {
-        return $this->hasMany('App\Models\OrderAcceptedLog', 'driver_id');
+        return $this->belongsTo('App\Models\Driver', 'driver_id');
     }
 }

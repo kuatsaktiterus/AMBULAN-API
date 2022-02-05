@@ -46,10 +46,12 @@ class LoginRequest extends FormRequest
             'message'   => 'validation error',
             'error'     => $validator->errors(),
             'content'   => null,
-        ]);            
+        ]);     
         
         throw (new ValidationException($validator, $response))
             ->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
+        
+        parent::failedValidation($validator);
     }
 }

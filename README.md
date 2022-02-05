@@ -121,12 +121,13 @@ if you dont change the url in .env the default link will be in http://localhost:
 
 ### How To Use The API
 * Auththentication API
+
 <br>
 Note that there are 3 end-point (login, register, and logout).
 
 <br>
 <br>
-Register API
+<h3> Register API </h3>
 <br>
 <br>
 End-point:
@@ -148,26 +149,40 @@ Method: POST
 
 Header:
 ```
-api_key: (api key from file .env) # without brackets
+x-api-key: (api key from file .env) # without brackets
 ```
 
 Json-required:
 ```
+// for driver user
+{
+  "name": "name of user",
+  "phone_number": "phone number",
+  "password": "user password",
+  "user_role": "user password",
+  "vehicle_name": "name of vehicle",
+  "registration_number": "registration number"
+}
+```
+
+```
+// for customer user
 {
   "name": "name of user",
   "phone_number": "phone number",
   "password": "user password",
   "user_role": "role of user",
-  "vehicle_name": "name of vehicle",
-  "registration_number": "registration number"
 }
 ```
+
+
 NB: There are just 2 value available for "user_role" (customer and driver) 
 <br>
 <br>
 <br>
 <br>
 Expected Response when success:
+
 ```
 {
   "status": "success",
@@ -186,7 +201,7 @@ Expected Response when success:
 
 <br>
 <br>
-Login API
+<h3> Login API </h3>
 <br>
 <br>
 End-point:
@@ -206,7 +221,7 @@ Method: GET
 
 Header: 
 ```
-api_key = (api key from file .env) # without brackets
+x-api-key = (api key from file .env) # without brackets
 ```
 
 Json-required:
@@ -239,7 +254,7 @@ Expected response when success:
 
 <br>
 <br>
-Logout API
+<h3> Logout API </h3>
 <br>
 <br>
 
@@ -260,13 +275,14 @@ Method: POST
 
 Header:
 
-    api_key = (api key from file .env) # without brackets
+    x-api-key = (api key from file .env) # without brackets
     Authorization = (token_type) (access token) # without brackets
 
 Json-required: No JSON required
 <br>
 <br>
 Expected Response when success:
+
 ```
 {
   "status": "success",
@@ -275,3 +291,193 @@ Expected Response when success:
   "content": null
 }
 ```
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+* Order API
+
+<br>
+<h3> Make Order API </h3>
+<br>
+<br>
+
+End-point: 
+```
+http://localhost:8000/store-order
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/store-order
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    x-api-key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
+
+Json-required:
+```
+{
+  "pick_up_detail": "pick up detail",
+  "pick_up_latitude": "pick up latitude",
+  "pick_up_longitude": "pick up longitude",
+  "drop_off_detail": "drop off latitude",
+  "drop_off_latitude": "drop off latitude",
+  "drop_off_longitude": "drop off longitude",
+}
+```
+
+<br>
+<br>
+Expected Response when success:
+
+```
+{
+  "status": "success",
+  "message": "Created Successfully",
+  "error": null,
+  "content": {
+    "status_code": 201,
+    "order_id": "id of order",
+    "status": "searching"
+  }
+}
+```
+
+<br>
+<h3> Check Order API </h3>
+<br>
+<br>
+
+End-point: 
+```
+http://localhost:8000/check-order
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/check-order
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    x-api-key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
+
+Json-required:
+
+```
+// id of order
+{
+    "order_id": "3"
+}
+```
+
+<br>
+<br>
+Expected Response when success:
+
+```
+{
+  "status": "success",
+  "message": "Order Callback Successfully",
+  "error": null,
+  "content": {
+    "status_code": 200,
+    "pick_up": {
+        "detail": "dekat rumahnya acung",
+        "latitude": "dekat rumahnya acung",
+        "longitude": "dekat rumahnya acung"
+      },
+      "drop_off": {
+          "detail": "dekat rumahnya acung",
+          "latitude": "dekat rumahnya acung",
+          "longitude": "dekat rumahnya acung"
+      },
+      "orderer": {
+          "id": 1,
+          "status": "status of customer order",
+          "name": "name of customer",
+          "phone_number": "phone number of customer"
+      },
+    "status": "status of order"
+  }
+}
+```
+
+<br>
+<h3> Check On Process Order API </h3>
+<br>
+<br>
+
+End-point: 
+```
+http://localhost:8000/check-on-process-order
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/check-on-process-order
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    x-api-key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
+
+Json-required: No JSON required
+
+<br>
+<br>
+Expected Response when success:
+
+```
+{
+  "status": "success",
+  "message": "Order Callback Successfully",
+  "error": null,
+  "content": {
+    "status_code": 200,
+    "pick_up": {
+        "detail": "dekat rumahnya acung",
+        "latitude": "dekat rumahnya acung",
+        "longitude": "dekat rumahnya acung"
+      },
+      "drop_off": {
+          "detail": "dekat rumahnya acung",
+          "latitude": "dekat rumahnya acung",
+          "longitude": "dekat rumahnya acung"
+      },
+      "orderer": {
+          "id": 1,
+          "status": "status of customer order",
+          "name": "name of customer",
+          "phone_number": "phone number of customer"
+      },
+    "status": "status of order"
+  }
+}
+```
+
+NB: Give Accepted header value with application/json (Accepted: application/json) 

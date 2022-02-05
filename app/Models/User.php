@@ -39,6 +39,11 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\PersonalAccessTokens', 'tokenable_id');
     }
 
+    public function Customer()
+    {
+        return $this->hasOne('App\Models\Customer', 'customer_id');
+    }
+
     public function Driver()
     {
         return $this->hasOne('App\Models\Driver', 'user_id');
@@ -52,6 +57,7 @@ class User extends Authenticatable
         static::deleting(function ($user) { // before delete() method call this
             $user->PersonalAccessTokens()->delete(); 
             $user->Driver()->delete(); 
+            $user->Customer()->delete(); 
         });
     }
 }

@@ -24,14 +24,10 @@ class DriverRequest extends FormRequest
      */
     public function rules()
     {
-        if (request()->user_role == 'driver') {
-            return [
-                'vehicle_name'          => 'required|string',
-                'registration_number'   => 'required|string',
-            ];
-        }
-
-        return[];
+        return (request()->user_role == 'driver') ? [
+            'vehicle_name'          => 'required|string',
+            'registration_number'   => 'required|string',
+        ] : [] ;
     }
 
     /**
@@ -49,10 +45,12 @@ class DriverRequest extends FormRequest
             'message'   => 'validation error',
             'error'     => $validator->errors(),
             'content'   => null,
-        ]);            
+        ]);     
         
         throw (new ValidationException($validator, $response))
             ->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
+        
+        parent::failedValidation($validator);
     }
 }

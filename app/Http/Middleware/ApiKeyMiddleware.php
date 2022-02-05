@@ -17,7 +17,7 @@ class ApiKeyMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if($request->header('api_key') != config('app.api_key'))
+        if($request->header('x-api-key') != config('app.api_key'))
         {
             $response = [
                 'status' => 'error',

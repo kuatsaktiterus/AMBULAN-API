@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DriverRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\StoreCustomerRequest;
 use App\Models\User;
+use App\Services\CreateCustomerService;
 use App\Services\CreateDriverService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -31,14 +33,20 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return $this->respon('success', 'Login Successfully', null , [
+        $respon = [
             'status_code'   => 200,
             'access_token'  => $token,
             'token_type'    => 'Bearer',
             'user_id'       => $user->id,
             'user_name'     => $user->name,
             'user_role'     => $user->role
-        ] , 200);
+        ];
+
+        if (($user->role) == 'customer') {
+            $respon['status'] = $user->customer->status;
+        }
+
+        return $this->respon('success', 'Login Successfully', null , $respon , 200);
     }
 
     /**
@@ -63,8 +71,9 @@ class AuthController extends Controller
      */
     public function register(
         RegisterRequest $registerReq, 
-        DriverRequest $driverReq, 
-        CreateDriverService $createDriverService)
+        DriverRequest $driverReq,
+        CreateDriverService $createDriverService,
+        CreateCustomerService $createCustomerService,)
     {
         $registerReq = $registerReq->validated();
         $driverReq = $driverReq->validated();
@@ -82,9 +91,9 @@ class AuthController extends Controller
             return $this->respon('error', 'error', $th->getMessage(), null , 500); 
         }
 
-        $createDriver = ($registerReq['user_role'] == 'driver') ? $createDriverService->CreateDriver($user, $driverReq) : true;
+        $createAccount = ($registerReq['user_role'] == 'driver') ? $createDriverService->CreateDriver($user, $driverReq) : $createCustomerService->CreateCustomer($user);
         
-        return ($createDriver != true) ? $this->respon('error', 'error', $createDriver->getMessage(), null , 500)
+        return ($createAccount[0]) ? $this->respon('error', 'error', $createAccount[1]->getMessage(), null , 500)
         : $this->respon('success', 'Register Successfully', null , [
             'status_code'   => 201,
             'access_token'  => $token,

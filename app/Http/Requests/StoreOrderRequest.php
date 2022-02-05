@@ -4,10 +4,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
-class OrderRequest extends FormRequest
+class StoreOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,14 +26,12 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'orderer_id'            => 'required|int',
             'pick_up_detail'        => 'required|string',
             'pick_up_latitude'      => 'required|string',
-            'pick_up_longtitude'    => 'required|string',
+            'pick_up_longitude'     => 'required|string',
             'drop_off_detail'       => 'required|string',
             'drop_off_latitude'     => 'required|string',
-            'drop_off_longtitude'   => 'required|string',
-            'status'                => ['required', Rule::in('searching', 'accepted', 'on_pick_up_location', 'on_the_way', 'on_drop_off_location', 'dropped')],
+            'drop_off_longitude'    => 'required|string',
         ];
     }
 
@@ -53,10 +50,12 @@ class OrderRequest extends FormRequest
             'message'   => 'validation error',
             'error'     => $validator->errors(),
             'content'   => null,
-        ]);            
+        ]);     
         
         throw (new ValidationException($validator, $response))
             ->errorBag($this->errorBag)
             ->redirectTo($this->getRedirectUrl());
+        
+        parent::failedValidation($validator);
     }
 }

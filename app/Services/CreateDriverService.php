@@ -17,7 +17,8 @@ class CreateDriverService {
             $user->update(['role' => 'driver']);
         } catch (\Throwable $th) {
             $user->delete();
-            return $th;
+            return [true, $th];
         }
+        return [false, 'safe'];
     }
 }

@@ -3,11 +3,10 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class RegisterRequest extends FormRequest
+class CheckOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +25,7 @@ class RegisterRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name'              => 'required|string|max:255',
-            'phone_number'      => 'required',
-            'password'          => 'required',
-            'user_role'         => ['required', Rule::in('customer', 'driver')],
-        ];
+        return ['order_id' => 'required|int'];
     }
 
     /**
