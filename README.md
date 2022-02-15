@@ -37,7 +37,7 @@ Project is created with:
 ### Setup
 To run this project, install it locally using npm:
 
-1. You have to run composer install
+1. You have to run composer install and composer update
 ```
 $ composer install
 ```
@@ -84,7 +84,18 @@ $ php artisan key:generate
 <br/>
 
 
-5. Run Migration
+5. Install Sanctum
+```
+composer require laravel/sanctum
+```
+Publish vendor
+```
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+```
+<br>
+<br>
+
+6. Run Migration
 ```
 $ php artisan migrate
 ```
@@ -93,6 +104,8 @@ If you want to seed the database when you migrate type command below
 ```
 $ php artisan migrate --seed
 ```
+<br>
+<br>
 
 <br/>
 <br/>
@@ -133,12 +146,12 @@ Note that there are 3 end-point (login, register, and logout).
 End-point:
 
 ```
-http://localhost:8000/register
+http://localhost:8000/api/register
 ```
 
 or any url that you have example: 
 ```
-http://(YOUR URI)/register
+http://(YOUR URI)/api/register
 ```
 
 <br>
@@ -207,14 +220,14 @@ Expected Response when success:
 End-point:
 
 ```
-http://localhost:8000/login
+http://localhost:8000/api/login
 ```
 or any url that you have example: 
 ```
-http://(your uri)/login
+http://(your uri)/api/login
 ```
 <br>
-Method: GET
+Method: POST
 <br>
 <br>
 <br>
@@ -260,11 +273,11 @@ Expected response when success:
 
 End-point: 
 ```
-http://localhost:8000/logout
+http://localhost:8000/api/logout
 ```
  or any url that you have example: 
  ```
- http://(YOUR URI)/logout
+ http://(YOUR URI)/api/logout
 ```
 
 <br>
@@ -308,11 +321,11 @@ Expected Response when success:
 
 End-point: 
 ```
-http://localhost:8000/store-order
+http://localhost:8000/api/store-order
 ```
  or any url that you have example: 
  ```
- http://(YOUR URI)/store-order
+ http://(YOUR URI)/api/store-order
 ```
 
 <br>
@@ -362,11 +375,11 @@ Expected Response when success:
 
 End-point: 
 ```
-http://localhost:8000/check-order
+http://localhost:8000/api/check-order
 ```
  or any url that you have example: 
  ```
- http://(YOUR URI)/check-order
+ http://(YOUR URI)/api/check-order
 ```
 
 <br>
@@ -428,11 +441,11 @@ Expected Response when success:
 
 End-point: 
 ```
-http://localhost:8000/check-on-process-order
+http://localhost:8000/api/check-on-process-order
 ```
  or any url that you have example: 
  ```
- http://(YOUR URI)/check-on-process-order
+ http://(YOUR URI)/api/check-on-process-order
 ```
 
 <br>
