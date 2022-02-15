@@ -5,7 +5,7 @@ use App\Models\Order;
 
 class CheckOrderService {
 
-    public function CheckOrder($user)
+    public function CheckOnProcessOrder($user)
     {
         try {
             $order = Order::where('orderer_id', $user)
@@ -17,5 +17,15 @@ class CheckOrderService {
         }
 
         return ($order == null) ? [null, $order] : ['success', $order];
+    }
+
+    public function CheckOrder($order)
+    {
+        try {
+            $order = Order::findOrFail($order['order_id']);
+        } catch (\Throwable $th) {
+            return [true, $th];
+        }
+        return [false, $order];
     }
 }

@@ -17,7 +17,10 @@ class CreateDriversTable extends Migration
             $table->id();
             $table->string('vehicle_name');
             $table->string('registration_number');
+            $table->double('latitude')->default('0.0');
+            $table->double('longitude')->default('0.0');
             $table->bigInteger('user_id')->unsigned()->unique();
+            $table->boolean('is_ordered')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

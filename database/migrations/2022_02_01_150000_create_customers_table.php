@@ -16,6 +16,8 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('customer_id')->unsigned()->unique();
+            $table->string('latitude')->default('0.0');
+            $table->string('longitude')->default('0.0');
             $table->enum('status', ['ordering', 'safe'])->default('safe');
             
             $table->foreign('customer_id')->references('id')->on('users');

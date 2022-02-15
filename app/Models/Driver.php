@@ -17,7 +17,10 @@ class Driver extends Model
     protected $fillable = [
         'vehicle_name',
         'registration_number',
+        'latitude',
+        'longitude',
         'user_id',
+        'is_ordered',
     ];
 
     public function User()

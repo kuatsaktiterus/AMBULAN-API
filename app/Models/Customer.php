@@ -16,6 +16,8 @@ class Customer extends Model
      */
     protected $fillable = [
         'customer_id',
+        'latitude',
+        'longitude',
         'status',
     ];
 

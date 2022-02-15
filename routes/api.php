@@ -24,4 +24,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('store-order', [App\Http\Controllers\Order\OrderController::class, 'storeOrder']);
     Route::post('check-order', [App\Http\Controllers\Order\OrderController::class, 'checkOrder']);
     Route::post('check-on-process-order', [App\Http\Controllers\Order\OrderController::class, 'isOnProcessOrder']);
+    Route::post('check-accepted-order', [App\Http\Controllers\Order\OrderController::class, 'isOrderAccepted']);
+    Route::post('get-driver', [App\Http\Controllers\Order\OrderController::class, 'getDriver']);
+
+    // driver
+    Route::post('update-driver-location', [App\Http\Controllers\Driver\DriverController::class, 'LocationUpdate']);
 });

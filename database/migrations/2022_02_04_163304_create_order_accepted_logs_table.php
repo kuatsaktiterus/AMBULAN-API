@@ -17,6 +17,7 @@ class CreateOrderAcceptedLogsTable extends Migration
             $table->id();
             $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('driver_id')->unsigned();
+            $table->enum('is_accepted', ['ordering', 'accepted', 'finish', 'rejected'])->default('ordering');
 
             $table->foreign('order_id')->references('id')->on('customers');
             $table->foreign('driver_id')->references('id')->on('drivers');

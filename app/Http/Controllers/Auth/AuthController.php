@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\DriverRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
-use App\Http\Requests\StoreCustomerRequest;
 use App\Models\User;
 use App\Services\CreateCustomerService;
 use App\Services\CreateDriverService;
@@ -18,7 +17,7 @@ class AuthController extends Controller
 {
     /**
      * Login.
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\LoginRequest  $request
      * @return \Illuminate\Http\Response
      */
     public function login(LoginRequest $request)
@@ -69,12 +68,11 @@ class AuthController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function register(
-        RegisterRequest $registerReq, 
-        DriverRequest $driverReq,
-        CreateDriverService $createDriverService,
-        CreateCustomerService $createCustomerService,)
+    public function register(RegisterRequest $registerReq, DriverRequest $driverReq,)
     {
+        $createDriverService = new CreateDriverService;
+        $createCustomerService = new CreateCustomerService;
+
         $registerReq = $registerReq->validated();
         $driverReq = $driverReq->validated();
 

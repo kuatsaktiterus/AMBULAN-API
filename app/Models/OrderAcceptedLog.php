@@ -17,6 +17,7 @@ class OrderAcceptedLog extends Model
     protected $fillable = [
         'order_id',
         'driver_id',
+        'is_accepted',
     ];
 
     public function Order()

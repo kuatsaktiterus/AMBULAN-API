@@ -5,10 +5,10 @@ namespace App\Http\Controllers\Order;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CheckOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
+use App\Models\Driver;
 use App\Models\Order;
 use App\Services\CheckOrderService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -16,15 +16,24 @@ class OrderController extends Controller
      * Make an order from user.
      * @param  App\Http\Requests\StoreOrderRequest  $storeOrderReq
      * @param  Illuminate\Http\Request  $request
-     * @param  App\Services\CheckOrderService  $checkOrderService
      * @return \Illuminate\Http\Response
      * 
      */
-    public function storeOrder(Request $request, StoreOrderRequest $storeOrderReq, CheckOrderService $checkOrderService)
+
+    private $checkOrderService;
+
+    public function __construct()
+    {
+        // parent::__construct();
+
+        $this->checkOrderService = new CheckOrderService; 
+    }
+
+    public function storeOrder(Request $request, StoreOrderRequest $storeOrderReq)
     {
         $storeOrderReq = $storeOrderReq->validated();
-        $userId = $request->user()->id;
-        $checkOrder = $checkOrderService->checkOrder($userId);
+        $userId = $request->user()->customer->id;
+        $checkOrder = $this->checkOrderService->CheckOnProcessOrder($userId);
 
         if ($checkOrder[0] == 'error') {
             return $this->respon('error', 'error', $checkOrder[1]->getMessage(), null , 500);
@@ -63,13 +72,11 @@ class OrderController extends Controller
     public function checkOrder(CheckOrderRequest $checkOrderReq)
     {
         $checkOrderReq = $checkOrderReq->validated();
-        try {
-            $order = Order::findOrFail($checkOrderReq['order_id']);
-        } catch (\Throwable $th) {
-            return $this->respon('error', 'error', $th->getMessage(), null , 500);
-            
-        }
-        return $this->respon('success', 'Order Callback Successfully', null, $this->checkOrderResponse($order), 200);
+        $checkOrderService = $this->checkOrderService->checkOrder($checkOrderReq);
+
+        return ($checkOrderService[0]) ?
+        $this->respon('error', 'error', $checkOrderService[1]->getMessage(), null , 500) :
+        $this->respon('success', 'Order Callback Successfully', null, $this->checkOrderResponse($checkOrderService[1]), 200);
     }
 
     /**
@@ -79,10 +86,10 @@ class OrderController extends Controller
      * @return \Illuminate\Http\Response
      * 
      */
-    public function isOnProcessOrder(Request $request, CheckOrderService $checkOrderService)
+    public function isOnProcessOrder(Request $request)
     {
         $user = $request->user();
-        $order = $checkOrderService->CheckOrder($user->id);
+        $order = $this->checkOrderService->CheckOnProcessOrder($user->id);
 
         if ($order[0] == 'error') {
             return $this->respon('error', 'error', $order[1]->getMessage(), null , 500);
@@ -91,6 +98,70 @@ class OrderController extends Controller
         } elseif ($order[0] == null) {
             return $this->respon('success', 'No Order On Progress', null, null , 200);
         }
+    }
+
+    /**
+     * Checking if order already accepted.
+     *
+     * @param  App\Http\Requests\CheckOrderRequest  $checkOrderReq
+     * @return \Illuminate\Http\Response
+     */
+    public function isOrderAccepted(CheckOrderRequest $request)
+    {
+        $request = $request->validated();
+
+        try {
+            $order = Order::findOrfail($request['order_id']);
+            $isAccepted = $order->OrderAcceptedLog->is_accepted;
+        } catch (\Throwable $th) {
+            return $this->respon('error', 'error', $th->getMessage(), null , 500);
+        }
+
+        return ($isAccepted === false) ? $this->respon('success', 'order not accepted', null, [
+            'status_code'   => 200,
+            'order_id'      => $order->id,
+        ] , 200) :
+        $this->respon('success', 'order already accepted', null, [
+            'status_code'   => 200,
+            'order_id'      => $isAccepted->order->id,
+            'driver'        => [
+                'name'                  => $isAccepted->driver->user->name,
+                'vehicle_name'          => $isAccepted->driver->vehicle_name,
+                'registration_number'   => $isAccepted->driver->registration_number,
+                'latitude'              => $isAccepted->driver->latitude,
+                'longitude'             => $isAccepted->driver->longitude,
+            ]
+        ] , 200);
+    }
+
+    /**
+     * Get the driver for order.
+     *
+     * @param  App\Http\Requests\CheckOrderRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getDriver(CheckOrderRequest $request, int $radius=100)
+    {
+        $order = $this->checkOrderService->CheckOrder($request);
+        
+        if ($order[0]) {return $this->respon('error', 'error', $order[1]->getMessage(), null , 500);}
+        
+        $latitude = $order[1]->pick_up_latitude;
+        $longitude = $order[1]->pick_up_longitude;
+
+        $driver = Driver::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))
+                                  +COS(RADIANS('latitude'))*COS(RADIANS($latitude))
+                                  *COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < $radius")->first();
+
+        if ($driver === null) {
+            return $this->getDriver($request, $radius*=10);
+        }
+        
+        $driver->update(['is_ordered' => true]);
+        return $this->respon('success', 'Driver found', null, [
+            'status_code'   => 200,
+            'driver_id'     => $driver->id,
+        ], 200);
     }
 
     /**
@@ -121,18 +192,6 @@ class OrderController extends Controller
             ],
             'status'        => $response->status,
         ];
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**

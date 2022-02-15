@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class StoreOrderRequest extends FormRequest
+class LocationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,12 +26,8 @@ class StoreOrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'pick_up_detail'        => 'required|string',
-            'pick_up_latitude'      => 'required|int',
-            'pick_up_longitude'     => 'required|int',
-            'drop_off_detail'       => 'required|string',
-            'drop_off_latitude'     => 'required|int',
-            'drop_off_longitude'    => 'required|int',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
         ];
     }
 

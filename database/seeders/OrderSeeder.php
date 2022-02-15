@@ -15,13 +15,14 @@ class OrderSeeder extends Seeder
     public function run()
     {
         Order::create([
-            'orderer_id' => 1,
-            'pick_up_detail' => 'di samping jembatan dekat langit',
-            'pick_up_latitude' => '23.00078',
-            'pick_up_longitude' => '23.00078',
-            'drop_off_detail' => 'di samping jembatan dekat langit',
-            'drop_off_latitude' => '23.00078',
-            'drop_off_longitude' => '23.00078',
+            'orderer_id'            => 1,
+            'pick_up_detail'        => 'di samping jembatan dekat langit',
+            'pick_up_latitude'      => '23.00078',
+            'pick_up_longitude'     => '23.00078',
+            'drop_off_detail'       => 'di samping jembatan dekat langit',
+            'drop_off_latitude'     => '23.00078',
+            'drop_off_longitude'    => '23.00078',
+            'status'                => 'accepted',
         ]);
     }
 }
