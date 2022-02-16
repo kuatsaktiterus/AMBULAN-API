@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Driver\DriverController;
 use App\Http\Requests\CheckOrderRequest;
 use App\Http\Requests\StoreOrderRequest;
-use App\Models\Driver;
 use App\Models\Order;
 use App\Services\CheckOrderService;
+use App\Services\GetDriverService;
+use Error;
+use Exception;
 use Illuminate\Http\Request;
+use ParseError;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -140,8 +145,9 @@ class OrderController extends Controller
      * @param  App\Http\Requests\CheckOrderRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function getDriver(CheckOrderRequest $request, int $radius=100)
+    public function getDriver(CheckOrderRequest $request)
     {
+        $getDriver = new GetDriverService();
         $order = $this->checkOrderService->CheckOrder($request);
         
         if ($order[0]) {return $this->respon('error', 'error', $order[1]->getMessage(), null , 500);}
@@ -149,14 +155,12 @@ class OrderController extends Controller
         $latitude = $order[1]->pick_up_latitude;
         $longitude = $order[1]->pick_up_longitude;
 
-        $driver = Driver::whereRaw("ACOS(SIN(RADIANS('latitude'))*SIN(RADIANS($latitude))
-                                  +COS(RADIANS('latitude'))*COS(RADIANS($latitude))
-                                  *COS(RADIANS('longitude')-RADIANS($longitude)))*6380 < $radius")->first();
+        $driver = $getDriver->getDriver($latitude, $longitude);
 
-        if ($driver === null) {
-            // return $this->getDriver($request, $radius*=10);
+        if (isset($driver->is_error)) {
+            return $this->respon('error', 'error', $driver->getMessage(), null , 500);
         }
-        
+
         $driver->update(['is_ordered' => true]);
         return $this->respon('success', 'Driver found', null, [
             'status_code'   => 200,

@@ -172,7 +172,7 @@ Json-required:
   "name": "name of user",
   "phone_number": "phone number",
   "password": "user password",
-  "user_role": "user password",
+  "user_role": "user role",
   "vehicle_name": "name of vehicle",
   "registration_number": "registration number"
 }
@@ -490,6 +490,54 @@ Expected Response when success:
       },
     "status": "status of order"
   }
+}
+```
+
+<br>
+<h3> Get Driver For Order API </h3>
+<br>
+<br>
+
+End-point: 
+```
+http://localhost:8000/api/get-driver
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/api/get-driver
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    x-api-key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
+
+Json-required: 
+```
+{
+  "order_id": "id of order data"
+}
+```
+
+<br>
+<br>
+Expected Response when success:
+
+```
+{
+    "status": "success",
+    "message": "Driver found",
+    "error": null,
+    "content": {
+        "status_code": 200,
+        "driver_id": "id of the driver that system get
+    }
 }
 ```
 

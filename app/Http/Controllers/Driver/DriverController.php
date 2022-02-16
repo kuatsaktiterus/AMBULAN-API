@@ -30,14 +30,16 @@ class DriverController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * get driver base by the id.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function getDriver(int $id)
     {
-        //
+        $driver = Driver::findOrFail($id);
+
+        return $driver;
     }
 
     /**
