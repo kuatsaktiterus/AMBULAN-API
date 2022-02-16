@@ -9,6 +9,15 @@
   - [How To Use](#how-to-use)
     - [Run App](#run-app)
     - [How To Use The API](#how-to-use-the-api)
+      - [Auththentication API](#auththentication-api)
+        - [<h3> Register API](#h3-register-api)
+        - [<h3> Login API](#h3-login-api)
+        - [<h3> Logout API](#h3-logout-api)
+      - [Order API](#order-api)
+        - [<h3> Make Order API](#h3-make-order-api)
+        - [<h3> Check Order API](#h3-check-order-api)
+        - [<h3> Check On Process Order API](#h3-check-on-process-order-api)
+        - [<h3> Get Driver For Order API](#h3-get-driver-for-order-api)
 
 ## General info
 This project is to provide api for a mobile app.
@@ -133,14 +142,15 @@ if you dont change the url in .env the default link will be in http://localhost:
 <br>
 
 ### How To Use The API
-* Auththentication API
+#### Auththentication API
 
 <br>
 Note that there are 3 end-point (login, register, and logout).
 
 <br>
 <br>
-<h3> Register API </h3>
+
+##### <h3> Register API 
 <br>
 <br>
 End-point:
@@ -214,7 +224,8 @@ Expected Response when success:
 
 <br>
 <br>
-<h3> Login API </h3>
+
+##### <h3> Login API 
 <br>
 <br>
 End-point:
@@ -267,7 +278,8 @@ Expected response when success:
 
 <br>
 <br>
-<h3> Logout API </h3>
+
+##### <h3> Logout API 
 <br>
 <br>
 
@@ -312,10 +324,11 @@ Expected Response when success:
 <br>
 <br>
 
-* Order API
+#### Order API
 
 <br>
-<h3> Make Order API </h3>
+
+##### <h3> Make Order API 
 <br>
 <br>
 
@@ -369,7 +382,8 @@ Expected Response when success:
 ```
 
 <br>
-<h3> Check Order API </h3>
+
+##### <h3> Check Order API 
 <br>
 <br>
 
@@ -435,7 +449,9 @@ Expected Response when success:
 ```
 
 <br>
-<h3> Check On Process Order API </h3>
+
+##### <h3> Check On Process Order API 
+This API is for checking if there is any order for the authenticated customer is on going
 <br>
 <br>
 
@@ -494,7 +510,9 @@ Expected Response when success:
 ```
 
 <br>
-<h3> Get Driver For Order API </h3>
+
+##### <h3> Get Driver For Order API
+This API for getting driver for specific order 
 <br>
 <br>
 
