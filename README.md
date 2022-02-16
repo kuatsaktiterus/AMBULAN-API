@@ -10,14 +10,14 @@
     - [Run App](#run-app)
     - [How To Use The API](#how-to-use-the-api)
       - [Auththentication API](#auththentication-api)
-        - [<h4> Register API](#h4-register-api)
-        - [<h4> Login API](#h4-login-api)
-        - [<h4> Logout API](#h4-logout-api)
+        - [Register API](#register-api)
+        - [Login API](#login-api)
+        - [Logout API](#logout-api)
       - [Order API](#order-api)
-        - [<h4> Make Order API](#h4-make-order-api)
-        - [<h4> Check Order API](#h4-check-order-api)
-        - [<h4> Check On Process Order API](#h4-check-on-process-order-api)
-        - [<h4> Get Driver For Order API](#h4-get-driver-for-order-api)
+        - [Make Order API](#make-order-api)
+        - [Check Order API](#check-order-api)
+        - [Check On Process Order API](#check-on-process-order-api)
+        - [Get Driver For Order API](#get-driver-for-order-api)
 
 ## General info
 This project is to provide api for a mobile app.
@@ -150,7 +150,7 @@ Note that there are 3 end-point (login, register, and logout).
 <br>
 <br>
 
-##### <h4> Register API 
+##### Register API 
 <br>
 <br>
 End-point:
@@ -225,7 +225,7 @@ Expected Response when success:
 <br>
 <br>
 
-##### <h4> Login API 
+##### Login API 
 <br>
 <br>
 End-point:
@@ -279,7 +279,7 @@ Expected response when success:
 <br>
 <br>
 
-##### <h4> Logout API 
+##### Logout API 
 <br>
 <br>
 
@@ -328,7 +328,7 @@ Expected Response when success:
 
 <br>
 
-##### <h4> Make Order API 
+##### Make Order API 
 <br>
 <br>
 
@@ -383,7 +383,7 @@ Expected Response when success:
 
 <br>
 
-##### <h4> Check Order API 
+##### Check Order API 
 <br>
 <br>
 
@@ -450,7 +450,7 @@ Expected Response when success:
 
 <br>
 
-##### <h4> Check On Process Order API 
+##### Check On Process Order API 
 This API is for checking if there is any order for the authenticated customer is on going
 <br>
 <br>
@@ -511,7 +511,7 @@ Expected Response when success:
 
 <br>
 
-##### <h4> Get Driver For Order API
+##### Get Driver For Order API
 This API for getting driver for specific order 
 <br>
 <br>
