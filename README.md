@@ -1,128 +1,132 @@
-# AMBULAN-API
-## Table of contents
-- [AMBULAN-API](#ambulan-api)
-  - [Table of contents](#table-of-contents)
-  - [General info](#general-info)
-  - [Prerequisite](#prerequisite)
-    - [Technologies](#technologies)
-    - [Setup](#setup)
-  - [How To Use](#how-to-use)
-    - [Run App](#run-app)
-    - [How To Use The API](#how-to-use-the-api)
-      - [Auththentication API](#auththentication-api)
-        - [Register API](#register-api)
-        - [Login API](#login-api)
-        - [Logout API](#logout-api)
-      - [Order API](#order-api)
-        - [Make Order API](#make-order-api)
-        - [Check Order API](#check-order-api)
-        - [Check On Process Order API](#check-on-process-order-api)
-        - [Get Driver For Order API](#get-driver-for-order-api)
-        - [Driver Response For Accepting Or Not For Order API](#driver-response-for-accepting-or-not-for-order-api)
-
-## General info
-This project is to provide api for a mobile app.
-
-<br/>
-<br/>
-
-## Prerequisite
-
-* PHP
-* Composer
-
-<br/>
-<br/>
-
-	
-### Technologies
-Project is created with:
-* laravel framework version: ^8.75
-* php version: ^7.3|^8.0
-
-<br/>
-<br/>
-
-	
-### Setup
-To run this project, install it locally using npm:
-
-1. You have to run composer install and composer update
-```
-$ composer install
-```
-
-<br/>
-<br/>
+<div id="top"></div>
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
 
-2. Setup env file
 
-- copy env file from .env.example
-<br>
-<br>
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
 
-For windows:
-
-```
-$ copy .env.example .env
-```
-Or for linux:
-
-```
-$ cp .env.example .env
-```
-<br>
-
-- generate env key
-```
-$ php artisan key:generate
-```
-<br/>
-<br/>
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
 
 
-3. Open your .env file and change the database name (DB_DATABASE) to whatever you have, username (DB_USERNAME) and password (DB_PASSWORD) field correspond to your configuration.
 
-<br/>
-<br/>
+<!-- PROJECT LOGO -->
+<h3 align="center">AMBULAN-API</h3>
 
-4. Setup new value in env for api key
-![Screenshot](/screenshot/screenshot.jpg)
-
-<br/>
-<br/>
+  <p align="center">
+    Api for ambulance system
+  </p>
+</div>
 
 
+
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+  </ol>
+</details>
+
+### Built With
+
+* [Laravel](https://laravel.com)
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+### Prerequisites
+
+You have install composer first for the laravel
+You can see the documentations for downloading composer in here [composer-download-url]
+<br><br>
+
+### Installation
+
+1. Clone the repo
+   ```sh
+   git clone https://github.com/kuatsaktiterus/AMBULAN-API.git
+   ```
+2. Install Vendor
+   ```sh
+   composer install
+   ```
+3. Setup The .env file  
+  For Windows:
+   ```sh
+   copy .env.example .env
+   ```  
+   For Linux:
+   ```sh
+   cp .env.example .env
+   ```  
+   Then Generate key
+   ```sh
+   php artisan key:generate
+   ``` 
+4. Open your .env file and change the database name (DB_DATABASE) to whatever you have, username (DB_USERNAME) and password (DB_PASSWORD) field correspond to your configuration. Add API_KEY and fill this with your own api key or you can store in another place like database and do some tweaks.  
+For Example:
+[![AMBULAN-API][product-screenshot]](https://example.com)
 5. Install Sanctum
-```
-composer require laravel/sanctum
-```
-Publish vendor
-```
-php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-```
-<br>
-<br>
+   ```sh
+   composer require laravel/sanctum
+   ```  
+   publish vendor  
+   ```sh
+   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+   ```  
+6. Setup channel for laravel
+   * Install pusher
+   ```sh
+   composer require pusher/pusher-php-server
+   ```  
+   After install pusher you can go to [pusher] to create your account and setup your own channel
+   * Setup .env for pusher
+   ```env
+   BROADCAST_DRIVER=pusher
 
-6. Run Migration
-```
-$ php artisan migrate
-```
-If you want to seed the database when you migrate type command below
+   PUSHER_APP_ID=your-pusher-app-id
+   PUSHER_APP_KEY=your-pusher-key
+   PUSHER_APP_SECRET=your-pusher-secret
+   PUSHER_APP_CLUSTER=your-pusher-cluster
+   ```
+7. Run Migration
+   ```
+   php artisan migrate
+   ```
 
-```
-$ php artisan migrate --seed
-```
-<br>
-<br>
 
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 ## How To Use
 
@@ -142,8 +146,8 @@ if you dont change the url in .env the default link will be in http://localhost:
 <br>
 <br>
 
-### How To Use The API
-#### Auththentication API
+## How To Use The API
+### Auththentication API
 
 <br>
 Note that there are 3 end-point (login, register, and logout).
@@ -151,7 +155,7 @@ Note that there are 3 end-point (login, register, and logout).
 <br>
 <br>
 
-##### Register API 
+#### Register API 
 <br>
 <br>
 End-point:
@@ -226,7 +230,7 @@ Expected Response when success:
 <br>
 <br>
 
-##### Login API 
+#### Login API 
 <br>
 <br>
 End-point:
@@ -280,7 +284,7 @@ Expected response when success:
 <br>
 <br>
 
-##### Logout API 
+#### Logout API 
 <br>
 <br>
 
@@ -325,11 +329,11 @@ Expected Response when success:
 <br>
 <br>
 
-#### Order API
+### Order API
 
 <br>
 
-##### Make Order API 
+#### Make Order API 
 <br>
 <br>
 
@@ -384,7 +388,7 @@ Expected Response when success:
 
 <br>
 
-##### Check Order API 
+#### Check Order API 
 <br>
 <br>
 
@@ -451,7 +455,7 @@ Expected Response when success:
 
 <br>
 
-##### Check On Process Order API 
+#### Check On Process Order API 
 This API is for checking if there is any order for the authenticated customer is on going
 <br>
 <br>
@@ -513,12 +517,12 @@ Expected Response when success:
 <br>
 <br>
 
-##### Get Driver For Order API
+#### Get Driver For Order API
 This API for getting driver for specific order 
 <br>
 <br>
 
-End-point: 
+* End-point: 
 ```
 http://localhost:8000/api/get-driver
 ```
@@ -526,28 +530,18 @@ http://localhost:8000/api/get-driver
  ```
  http://(YOUR URI)/api/get-driver
 ```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
+* Method: POST
+* Header:
 
     x-api-key = (api key from file .env) # without brackets
     Authorization = (token_type) (access token) # without brackets
-
-Json-required: 
+* Json-required: 
 ```
 {
   "order_id": "id of order data"
 }
 ```
-
-<br>
-<br>
-Expected Response when success:
+* Expected Response when success:
 
 ```
 {
@@ -563,12 +557,12 @@ Expected Response when success:
 <br>
 <br>
 
-##### Driver Response For Accepting Or Not For Order API
+#### Driver Response For Accepting Or Not For Order API
 This API for driver response for incoming order(accept order or not)
 <br>
 <br>
 
-End-point: 
+* End-point: 
 ```
 http://localhost:8000/api/accept-order
 ```
@@ -576,29 +570,20 @@ http://localhost:8000/api/accept-order
  ```
  http://(YOUR URI)/api/accept-order
 ```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
+* Method: POST  
+* Header:
 
     x-api-key = (api key from file .env) # without brackets
     Authorization = (token_type) (access token) # without brackets
 
-Json-required: 
+* Json-required: 
 ```
 {
   "order_id": "id of order,
   "is_accepted": "is order accepted or not" // true or false
 }
 ```
-
-<br>
-<br>
-Expected Response when success:
+* Expected Response when success:
 
 ```
 {
@@ -612,4 +597,14 @@ Expected Response when success:
 }
 ```
 
-NB: Give Accepted header value with application/json (Accepted: application/json) 
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[forks-url]: https://github.com/kuatsaktiterus/AMBULAN-API/network/members
+[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
+[stars-url]: https://github.com/kuatsaktiterus/AMBULAN-API/stargazers
+[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-url]: https://github.com/kuatsaktiterus/AMBULAN-API/issues
+[product-screenshot]: screenshot/screenshot.jpg
+[composer-download-url]:https://getcomposer.org/download/
+[pusher]:https://pusher.com/
