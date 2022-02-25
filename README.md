@@ -51,16 +51,15 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li>
+      <a href="#How-To-Use-The-API"></a>
+    </li>
   </ol>
 </details>
 
 ### Built With
 
 * [Laravel](https://laravel.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
 
 <!-- GETTING STARTED -->
 ## Getting Started
