@@ -53,6 +53,16 @@
     </li>
     <li>
       <a href="#How-To-Use-The-API">How To Use Api</a>
+      <ol>
+        <li type="A">
+          <a href="#authentication-api">Authentication Api</a>
+          <ul>
+            <li><a href="#register-api">Register Api</a></li>
+            <li><a href="#login-api">Login Api</a></li>
+            <li><a href="#logout-api">Logout Api</a></li>
+          </ul>
+        </li>
+      </ol>
     </li>
   </ol>
 </details>
@@ -146,7 +156,7 @@ if you dont change the url in .env the default link will be in http://localhost:
 <br>
 
 ## How To Use The API
-### Auththentication API
+### Authentication API
 
 <br>
 Note that there are 3 end-point (login, register, and logout).
