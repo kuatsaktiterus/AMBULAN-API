@@ -1,11 +1,12 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class DriverRequest extends FormRequest
+class IsOrderAcceptedRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +26,8 @@ class DriverRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_name'          => 'required|string',
-            'registration_number'   => 'required|string',
+            'is_accepted' => 'boolean|required',
+            'order_id' => 'required|int',
         ];
     }
 

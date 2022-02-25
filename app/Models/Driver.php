@@ -20,7 +20,6 @@ class Driver extends Model
         'latitude',
         'longitude',
         'user_id',
-        'is_ordered',
     ];
 
     public function User()

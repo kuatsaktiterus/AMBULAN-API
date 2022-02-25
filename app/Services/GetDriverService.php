@@ -2,6 +2,7 @@
 namespace App\Services;
 
 use App\Models\Driver;
+use App\Models\User;
 use Exception;
 
 class GetDriverService {
@@ -10,22 +11,22 @@ class GetDriverService {
     {
         try {
             $formula =  "6371 * acos(cos(radians(" . $latitude . ")) 
-                        * cos(radians(latitude)) 
+                        * cos(radians(users.latitude)) 
                         * cos(radians(longitude) - radians(" . $longitude . ")) 
                         + sin(radians(" .$latitude. ")) 
-                        * sin(radians(latitude)))";
+                        * sin(radians(users.latitude)))";
             
-            $driver = Driver::whereRaw("($formula) < $radius")
+            $driver = User::join('drivers', 'users.id', '=', 'drivers.user_id')
+                        ->whereRaw("($formula) < $radius")
                         ->where('is_ordered', false)
                         ->orderByRaw($formula)
                         ->first();
         
             if ($radius > 10) {
-                throw new Exception("No driver availabele for now");
+                throw new Exception("No driver available for now");
             }
         } catch (\Throwable $th) {
-            $th->is_error = true;
-            return $th;
+            throw $th;
         }
 
         if ($driver == null) {

@@ -27,11 +27,11 @@ class StoreOrderRequest extends FormRequest
     {
         return [
             'pick_up_detail'        => 'required|string',
-            'pick_up_latitude'      => 'required|int',
-            'pick_up_longitude'     => 'required|int',
+            'pick_up_latitude'      => 'required|numeric',
+            'pick_up_longitude'     => 'required|numeric',
             'drop_off_detail'       => 'required|string',
-            'drop_off_latitude'     => 'required|int',
-            'drop_off_longitude'    => 'required|int',
+            'drop_off_latitude'     => 'required|numeric',
+            'drop_off_longitude'    => 'required|numeric',
         ];
     }
 

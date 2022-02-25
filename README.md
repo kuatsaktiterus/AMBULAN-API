@@ -18,6 +18,7 @@
         - [Check Order API](#check-order-api)
         - [Check On Process Order API](#check-on-process-order-api)
         - [Get Driver For Order API](#get-driver-for-order-api)
+        - [Driver Response For Accepting Or Not For Order API](#driver-response-for-accepting-or-not-for-order-api)
 
 ## General info
 This project is to provide api for a mobile app.
@@ -510,6 +511,7 @@ Expected Response when success:
 ```
 
 <br>
+<br>
 
 ##### Get Driver For Order API
 This API for getting driver for specific order 
@@ -555,6 +557,57 @@ Expected Response when success:
     "content": {
         "status_code": 200,
         "driver_id": "id of the driver that system get
+    }
+}
+```
+<br>
+<br>
+
+##### Driver Response For Accepting Or Not For Order API
+This API for driver response for incoming order(accept order or not)
+<br>
+<br>
+
+End-point: 
+```
+http://localhost:8000/api/accept-order
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/api/accept-order
+```
+
+<br>
+Method: POST
+<br>
+<br>
+<br>
+
+Header:
+
+    x-api-key = (api key from file .env) # without brackets
+    Authorization = (token_type) (access token) # without brackets
+
+Json-required: 
+```
+{
+  "order_id": "id of order,
+  "is_accepted": "is order accepted or not" // true or false
+}
+```
+
+<br>
+<br>
+Expected Response when success:
+
+```
+{
+    "status": "success",
+    "message": "is accepted or rejected", //Order Accepted Or Order Rejected
+    "error": null,
+    "content": {
+        "status_code": 200,
+        "order_id": 1
     }
 }
 ```

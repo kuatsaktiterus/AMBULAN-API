@@ -18,7 +18,6 @@ class Customer extends Model
         'customer_id',
         'latitude',
         'longitude',
-        'status',
     ];
 
     public function User()
@@ -28,7 +27,7 @@ class Customer extends Model
 
     public function Orders()
     {
-        return $this->hasMany('App\Models\Customer', 'orderer_id');
+        return $this->hasMany('App\Models\Order', 'orderer_id');
     }
 
     // this is a recommended way to declare event handlers

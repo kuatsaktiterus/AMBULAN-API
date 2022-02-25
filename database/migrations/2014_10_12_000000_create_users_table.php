@@ -19,6 +19,9 @@ class CreateUsersTable extends Migration
             $table->string('phone_number')->unique();
             $table->string('password');
             $table->enum('role', ['customer', 'driver']);
+            $table->double('latitude')->default('0.0');
+            $table->double('longitude')->default('0.0');
+            $table->boolean('is_ordered')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

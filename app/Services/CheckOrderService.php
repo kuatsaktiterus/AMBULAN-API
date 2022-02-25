@@ -13,19 +13,8 @@ class CheckOrderService {
             ->latest()
             ->first();
         } catch (\Throwable $th) {
-            return ['error', $th];
+            throw $th;
         }
-
-        return ($order == null) ? [null, $order] : ['success', $order];
-    }
-
-    public function CheckOrder($order)
-    {
-        try {
-            $order = Order::findOrFail($order['order_id']);
-        } catch (\Throwable $th) {
-            return [true, $th];
-        }
-        return [false, $order];
+        return $order;
     }
 }

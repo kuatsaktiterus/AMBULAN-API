@@ -22,7 +22,7 @@ class CreateOrdersTable extends Migration
             $table->string('drop_off_detail');
             $table->double('drop_off_latitude');
             $table->double('drop_off_longitude');
-            $table->enum('status', ['searching', 'accepted', 'on_pick_up_location', 'on_the_way', 'on_drop_off_location', 'dropped', 'rejected'])->default('searching');
+            $table->enum('status', ['searching', 'waiting_confirmation', 'rejected', 'accepted', 'on_pick_up_location', 'on_the_way', 'on_drop_off_location', 'dropped'])->default('searching');
             $table->timestamps();
 
             $table->foreign('orderer_id')->references('id')->on('customers');

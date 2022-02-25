@@ -1,11 +1,13 @@
 <?php
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-class DriverRequest extends FormRequest
+class ChangeStatusOrderRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +27,8 @@ class DriverRequest extends FormRequest
     public function rules()
     {
         return [
-            'vehicle_name'          => 'required|string',
-            'registration_number'   => 'required|string',
+            "status" => ["required", "string", Rule::in('on_pick_up_location', 'on_the_way', 'on_drop_off_location', 'dropped')],
+            "order_id" => "required|integer",
         ];
     }
 

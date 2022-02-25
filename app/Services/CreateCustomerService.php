@@ -13,9 +13,7 @@ class CreateCustomerService {
             ]);
         } catch (\Throwable $th) {
             $user->delete();
-            return [true, $th];
+            return $th;
         }
-        return [false, 'safe'];
-
     }
 }

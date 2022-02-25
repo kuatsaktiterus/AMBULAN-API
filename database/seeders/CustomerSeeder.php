@@ -14,6 +14,6 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        Customer::create(['customer_id' => 1, 'status'  => 'safe']);
+        Customer::create(['customer_id' => 1]);
     }
 }

@@ -3,52 +3,41 @@
 namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Driver\DriverController;
-use App\Http\Requests\CheckOrderRequest;
-use App\Http\Requests\StoreOrderRequest;
 use App\Models\Order;
-use App\Services\CheckOrderService;
-use App\Services\GetDriverService;
-use Error;
-use Exception;
 use Illuminate\Http\Request;
-use ParseError;
-use Throwable;
 
 class OrderController extends Controller
 {
+
     /**
-     * Make an order from user.
+     * Get order.
+     *
+     * @param  App\Http\Requests\CheckOrderRequest  $checkOrderReq
+     * @return App\Models\Order 
+     * 
+     */
+    public function GetOrder($request)
+    {
+        try {
+            $order = Order::findOrFail($request['order_id']);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+        return $order;
+    }
+
+    /**
+     * Store order.
+     *
      * @param  App\Http\Requests\StoreOrderRequest  $storeOrderReq
-     * @param  Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      * 
      */
-
-    private $checkOrderService;
-
-    public function __construct()
+    public function store($request, $user)
     {
-        // parent::__construct();
-
-        $this->checkOrderService = new CheckOrderService; 
-    }
-
-    public function storeOrder(Request $request, StoreOrderRequest $storeOrderReq)
-    {
-        $storeOrderReq = $storeOrderReq->validated();
-        $userId = $request->user()->customer->id;
-        $checkOrder = $this->checkOrderService->CheckOnProcessOrder($userId);
-
-        if ($checkOrder[0] == 'error') {
-            return $this->respon('error', 'error', $checkOrder[1]->getMessage(), null , 500);
-        } elseif ($checkOrder[0] == 'success') {
-            return $this->respon('success', 'Already Ordered', null, $this->checkOrderResponse($checkOrder[1]) , 200);
-        }
-
         try {
             $order = Order::create([
-                'orderer_id'            => $userId,
+                'orderer_id'            => $user->id,
                 'pick_up_detail'        => $request['pick_up_detail'],
                 'pick_up_latitude'      => $request['pick_up_latitude'],
                 'pick_up_longitude'     => $request['pick_up_longitude'],
@@ -57,145 +46,62 @@ class OrderController extends Controller
                 'drop_off_longitude'    => $request['drop_off_longitude'],
             ]);
         } catch (\Throwable $th) {
-            return $this->respon('error', 'error', $th->getMessage(), null , 500);
+            throw $th;
         }
-
-        return $this->respon('success', 'Order Created Successfully', null , [
-            'status_code'   => 201,
-            'order_id'      => $order->id,
-            'status'        => $order->status,
-        ] , 201);
+        return $order;
     }
-
     /**
-     * checking order.
+     * Display a listing of the resource.
      *
-     * @param  App\Http\Requests\CheckOrderRequest  $checkOrderReq
      * @return \Illuminate\Http\Response
-     * 
      */
-    public function checkOrder(CheckOrderRequest $checkOrderReq)
+    public function index()
     {
-        $checkOrderReq = $checkOrderReq->validated();
-        $checkOrderService = $this->checkOrderService->checkOrder($checkOrderReq);
-
-        return ($checkOrderService[0]) ?
-        $this->respon('error', 'error', $checkOrderService[1]->getMessage(), null , 500) :
-        $this->respon('success', 'Order Callback Successfully', null, $this->checkOrderResponse($checkOrderService[1]), 200);
+        //
     }
 
     /**
-     * checking is there on process order.
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     * 
-     */
-    public function isOnProcessOrder(Request $request)
-    {
-        $user = $request->user();
-        $order = $this->checkOrderService->CheckOnProcessOrder($user->id);
-
-        if ($order[0] == 'error') {
-            return $this->respon('error', 'error', $order[1]->getMessage(), null , 500);
-        } elseif ($order[0] == 'success') {
-            return $this->respon('success', 'Order Callback Successfully', null, $this->checkOrderResponse($order[1]) , 200);
-        } elseif ($order[0] == null) {
-            return $this->respon('success', 'No Order On Progress', null, null , 200);
-        }
-    }
-
-    /**
-     * Checking if order already accepted.
-     *
-     * @param  App\Http\Requests\CheckOrderRequest  $checkOrderReq
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function isOrderAccepted(CheckOrderRequest $request)
+    public function update(Request $request, $id)
     {
-        $request = $request->validated();
-
-        try {
-            $order = Order::findOrfail($request['order_id']);
-            $isAccepted = $order->OrderAcceptedLog->is_accepted;
-        } catch (\Throwable $th) {
-            return $this->respon('error', 'error', $th->getMessage(), null , 500);
-        }
-
-        return ($isAccepted === false) ? $this->respon('success', 'order not accepted', null, [
-            'status_code'   => 200,
-            'order_id'      => $order->id,
-        ] , 200) :
-        $this->respon('success', 'order already accepted', null, [
-            'status_code'   => 200,
-            'order_id'      => $isAccepted->order->id,
-            'driver'        => [
-                'name'                  => $isAccepted->driver->user->name,
-                'vehicle_name'          => $isAccepted->driver->vehicle_name,
-                'registration_number'   => $isAccepted->driver->registration_number,
-                'latitude'              => $isAccepted->driver->latitude,
-                'longitude'             => $isAccepted->driver->longitude,
-            ]
-        ] , 200);
-    }
-
-    /**
-     * Get the driver for order.
-     *
-     * @param  App\Http\Requests\CheckOrderRequest $request
-     * @return \Illuminate\Http\Response
-     */
-    public function getDriver(CheckOrderRequest $request)
-    {
-        $getDriver = new GetDriverService();
-        $order = $this->checkOrderService->CheckOrder($request);
-        
-        if ($order[0]) {return $this->respon('error', 'error', $order[1]->getMessage(), null , 500);}
-        
-        $latitude = $order[1]->pick_up_latitude;
-        $longitude = $order[1]->pick_up_longitude;
-
-        $driver = $getDriver->getDriver($latitude, $longitude);
-
-        if (isset($driver->is_error)) {
-            return $this->respon('error', 'error', $driver->getMessage(), null , 500);
-        }
-
-        $driver->update(['is_ordered' => true]);
-        return $this->respon('success', 'Driver found', null, [
-            'status_code'   => 200,
-            'driver_id'     => $driver->id,
-        ], 200);
-    }
-
-    /**
-     * Response of checking order.
-     * @return array<int, string>
-     *
-     */
-    public function checkOrderResponse($response)
-    {
-        return [
-            'status_code'   => 200,
-            'order_id'      => $response->id,
-            'pick_up'       => [
-                'detail'    => $response->pick_up_detail,
-                'latitude'  => $response->pick_up_latitude,
-                'longitude' => $response->pick_up_longitude,
-            ],
-            'drop_off'      => [
-                'detail'    => $response->pick_up_detail,
-                'latitude'  => $response->drop_off_latitude,
-                'longitude' => $response->drop_off_longitude,
-            ],
-            'orderer'       => [
-                'id'            => $response->customer->id,
-                'status'        => $response->customer->status,
-                'name'          => $response->customer->user->name,
-                'phone_number'  => $response->customer->user->phone_number,
-            ],
-            'status'        => $response->status,
-        ];
+        //
     }
 
     /**

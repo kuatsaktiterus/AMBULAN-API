@@ -15,9 +15,9 @@ class CreateOrderAcceptedLogsTable extends Migration
     {
         Schema::create('order_accepted_logs', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('order_id')->unsigned();
+            $table->bigInteger('order_id')->unsigned()->unique();
             $table->bigInteger('driver_id')->unsigned();
-            $table->enum('is_accepted', ['ordering', 'accepted', 'finish', 'rejected'])->default('ordering');
+            $table->boolean('is_accepted')->default(false);
 
             $table->foreign('order_id')->references('id')->on('customers');
             $table->foreign('driver_id')->references('id')->on('drivers');
