@@ -52,7 +52,7 @@
       </ul>
     </li>
     <li>
-      <a href="#How-To-Use-The-API"></a>
+      <a href="#How-To-Use-The-API">How To Use Api</a>
     </li>
   </ol>
 </details>
