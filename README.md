@@ -1,13 +1,4 @@
 <div id="top"></div>
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-
 
 <!-- PROJECT SHIELDS -->
 <!--
@@ -53,14 +44,26 @@
     </li>
     <li>
       <a href="#How-To-Use-The-API">How To Use Api</a>
-      <ol>
-        <li type="A">
+      <ol type="A">
+        <li>
           <a href="#authentication-api">Authentication Api</a>
           <ul>
             <li><a href="#register-api">Register Api</a></li>
             <li><a href="#login-api">Login Api</a></li>
             <li><a href="#logout-api">Logout Api</a></li>
           </ul>
+        </li>
+        <li>
+            <a href="#order-api">Order Api</a>
+            <ul>
+              <li><a href="#make-order-api">Make Order Api</a></li>
+              <li><a href="#check-order-api">Check Order Api</a></li>
+              <li><a href="#check-on-process-order-api">Check On Process Order Api </a></li>
+              <li><a href="#get-driver-for-order-api">Get Driver For Order Api</a></li>
+              <li><a href="#driver-response-for-accepting-or-not-for-order-api">Driver Response For Accepting Or Not For Order Api</a></li>
+              <li><a href="#check-order-if-accepted-api">Check Order If Accepted Api</a></li>
+            </ul>
+            </ul>
         </li>
       </ol>
     </li>
@@ -159,15 +162,10 @@ if you dont change the url in .env the default link will be in http://localhost:
 ### Authentication API
 
 <br>
-Note that there are 3 end-point (login, register, and logout).
+Note that there are 3 end-point (login, register, and logout).  
 
-<br>
-<br>
-
-#### Register API 
-<br>
-<br>
-End-point:
+#### Register API  
+* End-point:
 
 ```
 http://localhost:8000/api/register
@@ -176,21 +174,14 @@ http://localhost:8000/api/register
 or any url that you have example: 
 ```
 http://(YOUR URI)/api/register
-```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
+```    
+* Method: POST  
+* Header:
 ```
 x-api-key: (api key from file .env) # without brackets
-```
-
-Json-required:
-```
+```  
+* Json-required:
+```  
 // for driver user
 {
   "name": "name of user",
@@ -210,15 +201,10 @@ Json-required:
   "password": "user password",
   "user_role": "role of user",
 }
-```
+```  
+NB: There are just 2 value available for "user_role" (customer and driver)
 
-
-NB: There are just 2 value available for "user_role" (customer and driver) 
-<br>
-<br>
-<br>
-<br>
-Expected Response when success:
+* Expected Response when success:
 
 ```
 {
@@ -231,48 +217,41 @@ Expected Response when success:
     "token_type": "Bearer",
     "user_id": id of the user,
     "user_name": "user name",
-    "user_role": "user role"
+    "user_role": "user role",
+    "is_ordered": "true or false" // this is parameter for customer or driver(customer user use this to inform if customer already order. Driver use this for inform if driver already have order)    
   }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <br>
 <br>
 
-#### Login API 
-<br>
-<br>
-End-point:
+#### Login API  
 
+* End-point:
 ```
 http://localhost:8000/api/login
 ```
 or any url that you have example: 
 ```
-http://(your uri)/api/login
+http://(your uri)/api/login  
 ```
-<br>
-Method: POST
-<br>
-<br>
-<br>
 
-Header: 
+* Method: POST  
+* Header: 
 ```
 x-api-key = (api key from file .env) # without brackets
-```
-
-Json-required:
+```  
+* Json-required:
 ```
 {
   "phone_number": "user phone number", 
   "password": "user password" 
 }
-```
-<br>
-<br>
-
-Expected response when success:
+```  
+* Expected response when success:
 ```
 {
   "status": "success",
@@ -284,43 +263,36 @@ Expected response when success:
     "token_type": "Bearer",
     "user_id": id of the user,
     "user_name": "user name",
-    "user_role": "user role"
+    "user_role": "user role",
+    "is_ordered": "true or false" // this is parameter for customer or driver(customer user use this to inform if customer already order. Driver use this for inform if driver already have order)
   }
 }
 
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <br>
 <br>
 
-#### Logout API 
-<br>
-<br>
-
-End-point: 
+#### Logout API  
+* End-point: 
 ```
 http://localhost:8000/api/logout
 ```
  or any url that you have example: 
  ```
  http://(YOUR URI)/api/logout
+```  
+* Method: POST  
+* Header:
+```
+x-api-key = (api key from file .env) # without brackets
+Authorization = (token_type) (access token) # without brackets  
 ```
 
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
-
-    x-api-key = (api key from file .env) # without brackets
-    Authorization = (token_type) (access token) # without brackets
-
-Json-required: No JSON required
-<br>
-<br>
-Expected Response when success:
+* Json-required: No JSON required  
+* Expected Response when success:
 
 ```
 {
@@ -337,36 +309,27 @@ Expected Response when success:
 <br>
 <br>
 <br>
+<p align="right">(<a href="#top">back to top</a>)</p>
 
-### Order API
 
-<br>
+### Order API  
 
-#### Make Order API 
-<br>
-<br>
-
-End-point: 
+#### Make Order API  
+* End-point: 
 ```
 http://localhost:8000/api/store-order
 ```
  or any url that you have example: 
  ```
  http://(YOUR URI)/api/store-order
+```  
+* Method: POST  
+* Header:
 ```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
-
     x-api-key = (api key from file .env) # without brackets
     Authorization = (token_type) (access token) # without brackets
-
-Json-required:
+```
+* Json-required:
 ```
 {
   "pick_up_detail": "pick up detail",
@@ -377,62 +340,64 @@ Json-required:
   "drop_off_longitude": "drop off longitude",
 }
 ```
-
-<br>
-<br>
-Expected Response when success:
+* Expected Response when success:
 
 ```
 {
-  "status": "success",
-  "message": "Created Successfully",
-  "error": null,
+  "status": "status of response",
+  "message": "message from response",
+  "error": 'error',
   "content": {
-    "status_code": 201,
-    "order_id": "id of order",
-    "status": "searching"
+      "status_code": "code of status",
+      "order_id": "iid of order,
+      "pick_up": {
+          "detail": "pick up detail",
+          "latitude": "latitude of pick up",
+          "longitude": "longitude of pick up",
+      },
+      "drop_off": {
+          "detail": "drop off detail",
+          "latitude": "latitude of drop off",
+          "longitude": "longitude of drop off"
+      },
+      "orderer": {
+          "id": "id of orderer,
+          "is_ordered": "status if ordered or not,
+          "name": "name of orderer(customer)",
+          "phone_number": "phone number of orderer(customer)"
+      },
+      "status": "status of order"
   }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <br>
-
-#### Check Order API 
-<br>
 <br>
 
-End-point: 
+#### Check Order API  
+* End-point: 
 ```
 http://localhost:8000/api/check-order
 ```
  or any url that you have example: 
  ```
  http://(YOUR URI)/api/check-order
-```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
-
-    x-api-key = (api key from file .env) # without brackets
-    Authorization = (token_type) (access token) # without brackets
-
-Json-required:
-
+```  
+* Method: POST  
+* Header:
+```  
+x-api-key = (api key from file .env) # without brackets
+Authorization = (token_type) (access token) # without brackets
+```  
+* Json-required:  
 ```
 // id of order
 {
     "order_id": "3"
 }
-```
-
-<br>
-<br>
-Expected Response when success:
+```  
+* Expected Response when success:
 
 ```
 {
@@ -461,67 +426,60 @@ Expected Response when success:
   }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <br>
 
 #### Check On Process Order API 
-This API is for checking if there is any order for the authenticated customer is on going
-<br>
-<br>
-
-End-point: 
+This API is for checking if there is any order for the authenticated customer is on going  
+* End-point: 
 ```
 http://localhost:8000/api/check-on-process-order
 ```
  or any url that you have example: 
  ```
  http://(YOUR URI)/api/check-on-process-order
+```  
+* Method: POST  
+* Header:
 ```
-
-<br>
-Method: POST
-<br>
-<br>
-<br>
-
-Header:
-
-    x-api-key = (api key from file .env) # without brackets
-    Authorization = (token_type) (access token) # without brackets
-
-Json-required: No JSON required
-
-<br>
-<br>
-Expected Response when success:
+x-api-key = (api key from file .env) # without brackets
+Authorization = (token_type) (access token) # without brackets
+```  
+* Json-required: No JSON required  
+* Expected Response when success:
 
 ```
 {
-  "status": "success",
-  "message": "Order Callback Successfully",
-  "error": null,
+  "status": "status of response",
+  "message": "message from response",
+  "error": 'error',
   "content": {
-    "status_code": 200,
-    "pick_up": {
-        "detail": "dekat rumahnya acung",
-        "latitude": "dekat rumahnya acung",
-        "longitude": "dekat rumahnya acung"
+      "status_code": "code of status",
+      "order_id": "iid of order,
+      "pick_up": {
+          "detail": "pick up detail",
+          "latitude": "latitude of pick up",
+          "longitude": "longitude of pick up",
       },
       "drop_off": {
-          "detail": "dekat rumahnya acung",
-          "latitude": "dekat rumahnya acung",
-          "longitude": "dekat rumahnya acung"
+          "detail": "drop off detail",
+          "latitude": "latitude of drop off",
+          "longitude": "longitude of drop off"
       },
       "orderer": {
-          "id": 1,
-          "status": "status of customer order",
-          "name": "name of customer",
-          "phone_number": "phone number of customer"
+          "id": "id of orderer,
+          "is_ordered": "status if ordered or not,
+          "name": "name of orderer(customer)",
+          "phone_number": "phone number of orderer(customer)"
       },
-    "status": "status of order"
+      "status": "status of order"
   }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <br>
 <br>
@@ -563,14 +521,13 @@ http://localhost:8000/api/get-driver
     }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 <br>
 <br>
 
 #### Driver Response For Accepting Or Not For Order API
-This API for driver response for incoming order(accept order or not)
-<br>
-<br>
-
+This API for driver response for incoming order(accept order or not)  
 * End-point: 
 ```
 http://localhost:8000/api/accept-order
@@ -605,14 +562,63 @@ http://localhost:8000/api/accept-order
     }
 }
 ```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+
+#### Check Order If Accepted API  
+* End-point: 
+```
+http://localhost:8000/api/check-accepted-order
+```
+ or any url that you have example: 
+ ```
+ http://(YOUR URI)/api/check-accepted-order
+```  
+* Method: POST  
+* Header:
+```  
+x-api-key = (api key from file .env) # without brackets
+Authorization = (token_type) (access token) # without brackets
+```  
+* Json-required:  
+```
+// id of order
+{
+    "order_id": "id of orderer"
+}
+```  
+* Expected Response when success:
+
+```
+{
+  "status": "status of response",
+    "message": "message of response",
+    "error": "error",
+    "content": {
+        "status_code": "200",
+        "order_id": "id of order,
+        "order_status": "status of order",
+        "driver": {
+            "id": "id of driver",
+            "name": "name of driver",
+            "vehicle_name": "name of vehicle",
+            "registration_number": "registration number of driver vehicle",
+            "latitude": "latitude of driver location",
+            "longitude": "longitude of driver location"
+        }
+    }
+}
+```
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[forks-shield]: https://img.shields.io/github/forks/github_username/repo_name.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/kuatsaktiterus/AMBULAN-API.svg?style=for-the-badge
 [forks-url]: https://github.com/kuatsaktiterus/AMBULAN-API/network/members
-[stars-shield]: https://img.shields.io/github/stars/github_username/repo_name.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/kuatsaktiterus/AMBULAN-API.svg?style=for-the-badge
 [stars-url]: https://github.com/kuatsaktiterus/AMBULAN-API/stargazers
-[issues-shield]: https://img.shields.io/github/issues/github_username/repo_name.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/kuatsaktiterus/AMBULAN-API.svg?style=for-the-badge
 [issues-url]: https://github.com/kuatsaktiterus/AMBULAN-API/issues
 [product-screenshot]: screenshot/screenshot.jpg
 [composer-download-url]:https://getcomposer.org/download/
